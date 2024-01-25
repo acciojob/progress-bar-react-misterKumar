@@ -1,45 +1,44 @@
-                                                    
-import React,{useState,useEffect} from "react";  
-import 'regenerator-runtime/runtime';      
-import './../styles/App.css';              
-import Progressbar from "./Progressbar";           
-const App = () => {                                                            
-  const [progress, setProgress] = useState(0);              
- const percent =10;                                 
-  useEffect(() => {                               
-                                                  
-    const asyncOperation = () => {
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve();
-        }, 1000);
-      });
-    };
-                                                           
-    const updateProgress = async () => {
-      // update the progress bar value every second until it reaches 100%
-      for (let i = 10; i <= 100; i+=10) {
-        await asyncOperation();
-        setTimeout(() => {
-          setProgress(i);
-        }, 1000);
-        setProgress(i);
-      }
-    };
+import React, { useState, useEffect } from "react";
 
-    updateProgress();
-  }, []);                   
-                                                        
-  return (                                       
+const App = () => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress >= 100) {
+          clearInterval(intervalId);
+          return 100;
+        }
+
+        return prevProgress + 10;
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  return (
     <div>
-        {/* Do not remove the main div */}
-      
-       <h1>My Progress Bar</h1>
-    <Progressbar progress={progress} />
-        <div id="barOuter,barInner">{progress}%</div>
-        <hr/>
-    </div>                                                                                              
+      <h1>Progress Bar</h1>
+      <div id='barOuter'
+        style={{ width: "500px", height: "20px", backgroundColor: "lightgray" }}
+      >
+        <div
+          id='barInner'
+          style={{
+            width: `${progress}%`,
+            height: "100%",
+            backgroundColor: "blue",
+            transition: "width 0.5s ease-in-out",
+          }}
+        />
+      </div>
+      <p>{progress}%</p>
+    </div>
   );
-}
+};
 
 export default App;
