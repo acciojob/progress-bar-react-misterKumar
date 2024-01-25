@@ -9,5 +9,4 @@ function PageLayout({header, footer, children}) {
     </div>
   )
 }
-
 export default PageLayout
