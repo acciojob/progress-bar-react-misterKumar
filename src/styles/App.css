@@ -1,1 +1,21 @@
 
+#barOuter {
+    width: 100%;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 5px;
+  }
+  
+  #barInner {
+    height: 100%;
+    background-color: blue;
+    
+    transition: width 0.3s ease-in-out;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+  .title{
+    background-color: white;
+  }
+  
